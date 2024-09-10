@@ -1,7 +1,7 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
 import { loader } from "./loader";
 export { loader };
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData,Link } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -40,9 +40,12 @@ export default function Index() {
           </a>
         </li>
       </ul>
-      <div>
-        <pre>{JSON.stringify(users, null, 2)}</pre>
+      <div className="mx-auto mt-16 max-w-7xl text-center">
+        <Link to="/posts" className="text-xl text-blue-600 underline">
+        Blog Posts
+        </Link>
       </div>
+
       <div>
         <h2>Users</h2>
         <ul>
