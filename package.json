@@ -15,10 +15,13 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@prisma/adapter-d1": "^5.19.1",
+    "@prisma/client": "^5.19.1",
     "@remix-run/cloudflare": "^2.11.1",
     "@remix-run/cloudflare-pages": "^2.11.1",
     "@remix-run/react": "^2.11.1",
     "isbot": "^4.1.0",
+    "prisma": "^5.19.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -41,7 +44,7 @@
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
     "vite-tsconfig-paths": "^4.2.1",
-    "wrangler": "3.57.1"
+    "wrangler": "^3.74.0"
   },
   "engines": {
     "node": ">=20.0.0"
