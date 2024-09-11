@@ -13,14 +13,20 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+interface Post {
+  slug: string;
+  title: string;
+  markdown: string;
+}
+
 interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
 }
 
 export default function Index() {
-  const users = useLoaderData<User[]>();
+  const { posts, users } = useLoaderData<{ posts: Post[]; users: User[] }>();
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>Welcome to Remix on Cloudflare</h1>
@@ -49,7 +55,7 @@ export default function Index() {
       <div>
         <h2>Users</h2>
         <ul>
-          {users.map((user: User) => (
+          {users.map((user) => (
             <li key={user.id}>
               <div>ID: {user.id}</div>
               <div>NAME: {user.name}</div>

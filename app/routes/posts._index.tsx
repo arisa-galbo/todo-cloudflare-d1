@@ -1,17 +1,23 @@
-import { json } from "@remix-run/node";
-import { Link,useLoaderData } from "@remix-run/react";
+import { loader } from "./loader";
+export { loader };
+import { useLoaderData,Link } from "@remix-run/react";
 
-import { getPosts } from "~/models/post.server";
+interface Post {
+  slug: string;
+  title: string;
+  markdown: string;
+}
 
-export const loader = async () => {
-    return json({ posts: await getPosts() });
-  };
-  
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
 
 export default function Posts() {
-  const { posts } = useLoaderData<typeof loader>();
+  const { posts, users } = useLoaderData<{ posts: Post[]; users: User[] }>();
   return (
-    <main>
+    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>Posts</h1>
       <ul>
         {posts.map((post) => (
@@ -25,6 +31,6 @@ export default function Posts() {
           </li>
         ))}
       </ul>
-    </main>
+    </div>
   );
 }

@@ -19,3 +19,9 @@ model users {
   email String  @unique
   name  String
 }
+
+model Post {
+  slug     String @id
+  title    String
+  markdown String
+}
