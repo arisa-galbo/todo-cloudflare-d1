@@ -1,12 +1,14 @@
-import { connection } from "~/database/client";
-import type { Post } from "@prisma/client";
-import { PrismaClient } from "@prisma/client";
+import { connection } from '~/database/client';
+import type { Post } from '@prisma/client';
 
-
-const prisma = new PrismaClient();
-
-export { prisma };
-
-export async function createPost(post: { title: string; slug: string; markdown: string; }) {
-    return prisma.post.create({ data: post });
+export async function createPost(post: { title: string; slug: string; markdown: string; }, db: D1Database) {
+  const prisma = await connection(db);
+  try {
+    const result = await prisma.post.create({ data: post });
+    console.log("Post created:", result);
+    return result;
+  } catch (error) {
+    console.error("Error creating post:", error);
+    throw error;
   }
+}

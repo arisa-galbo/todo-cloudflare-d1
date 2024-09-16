@@ -3,46 +3,38 @@ import type { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { json,redirect } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import { createPost } from "./action"
+import { createPost } from "./action";
 
-export const action = async ({
-  request,
-}: ActionFunctionArgs) => {
+export const action = async ({ request, context }: ActionFunctionArgs) => {
   const formData = await request.formData();
-
-  const title = formData.get("title");
-  const slug = formData.get("slug");
-  const markdown = formData.get("markdown");
+  const title = formData.get("title") as string;
+  const slug = formData.get("slug") as string;
+  const markdown = formData.get("markdown") as string;
 
   const errors = {
     title: title ? null : "Title is required",
     slug: slug ? null : "Slug is required",
     markdown: markdown ? null : "Markdown is required",
   };
-  const hasErrors = Object.values(errors).some(
-    (errorMessage) => errorMessage
-  );
+
+  const hasErrors = Object.values(errors).some((errorMessage) => errorMessage);
   if (hasErrors) {
     return json(errors);
   }
 
-  invariant(
-    typeof title === "string",
-    "title must be a string"
-  );
-  invariant(
-    typeof slug === "string",
-    "slug must be a string"
-  );
-  invariant(
-    typeof markdown === "string",
-    "markdown must be a string"
-  );
+  invariant(typeof title === "string", "title must be a string");
+  invariant(typeof slug === "string", "slug must be a string");
+  invariant(typeof markdown === "string", "markdown must be a string");
 
-  await createPost({ title, slug, markdown });
+  try {
+    await createPost({ title, slug, markdown }, context.cloudflare.env['test11-binding']);
+  } catch (error) {
+    return json({ slug: "A post with this slug already exists." }, { status: 400 });
+  }
 
   return redirect("/posts/admin");
 };
+
 
 
 const inputClassName =
