@@ -1,16 +1,11 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-
+import { getPost } from "./action";
 interface Post {
   slug: string;
   title: string;
   markdown: string;
-}
-
-export async function getPost(slug: string, posts: Post[]) 
-{
-  return posts.find((post) => post.slug === slug);
 }
 
 export const loader = async ({ params, context }: LoaderFunctionArgs) => {
