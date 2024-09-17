@@ -1,7 +1,10 @@
-import { connection } from '~/database/client';
-import type { Post } from '@prisma/client';
+import { connection } from "~/database/client";
+import type { Post } from "@prisma/client";
 
-export async function createPost(post: { title: string; slug: string; markdown: string; }, db: D1Database) {
+export async function createPost(
+  post: { title: string; slug: string; markdown: string },
+  db: D1Database
+) {
   const prisma = await connection(db);
   try {
     const result = await prisma.post.create({ data: post });
@@ -13,8 +16,7 @@ export async function createPost(post: { title: string; slug: string; markdown: 
   }
 }
 
-export async function getPost(slug: string, posts: Post[]) 
-{
+export async function getPost(slug: string, posts: Post[]) {
   return posts.find((post) => post.slug === slug);
 }
 
@@ -38,8 +40,8 @@ export async function updatePost(
 }
 
 export async function deletePost(slug: string, db: D1Database) {
-  const prisma = await connection(db); 
-  console.log(slug+"データを取得できています");
+  const prisma = await connection(db);
+  console.log(slug + "データを取得できています");
   try {
     const result = await prisma.post.delete({
       where: { slug: slug },

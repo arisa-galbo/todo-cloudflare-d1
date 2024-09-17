@@ -1,6 +1,6 @@
-import { Form,useActionData } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
 import type { ActionFunctionArgs } from "@remix-run/cloudflare";
-import { json,redirect } from "@remix-run/react";
+import { json, redirect } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
 import { createPost } from "./action";
@@ -27,15 +27,19 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
   invariant(typeof markdown === "string", "markdown must be a string");
 
   try {
-    await createPost({ title, slug, markdown }, context.cloudflare.env['test11-binding']);
+    await createPost(
+      { title, slug, markdown },
+      context.cloudflare.env["test11-binding"]
+    );
   } catch (error) {
-    return json({ slug: "A post with this slug already exists." }, { status: 400 });
+    return json(
+      { slug: "A post with this slug already exists." },
+      { status: 400 }
+    );
   }
 
   return redirect("/posts/admin");
 };
-
-
 
 const inputClassName =
   "w-full rounded border border-gray-500 px-2 py-1 text-lg";
@@ -50,11 +54,7 @@ export default function NewPost() {
           {errors?.title ? (
             <em className="text-red-600">{errors.title}</em>
           ) : null}
-          <input
-            type="text"
-            name="title"
-            className={inputClassName}
-          />
+          <input type="text" name="title" className={inputClassName} />
         </label>
       </p>
       <p>
@@ -63,20 +63,14 @@ export default function NewPost() {
           {errors?.slug ? (
             <em className="text-red-600">{errors.slug}</em>
           ) : null}
-          <input
-            type="text"
-            name="slug"
-            className={inputClassName}
-          />
+          <input type="text" name="slug" className={inputClassName} />
         </label>
       </p>
       <p>
-      <label htmlFor="markdown">
+        <label htmlFor="markdown">
           Markdown:{" "}
           {errors?.markdown ? (
-            <em className="text-red-600">
-              {errors.markdown}
-            </em>
+            <em className="text-red-600">{errors.markdown}</em>
           ) : null}
         </label>
         <br />

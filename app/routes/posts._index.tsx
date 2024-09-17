@@ -1,6 +1,6 @@
 import { loader } from "./loader";
 export { loader };
-import { useLoaderData,Link } from "@remix-run/react";
+import { useLoaderData, Link } from "@remix-run/react";
 
 interface Post {
   slug: string;
@@ -22,10 +22,7 @@ export default function Posts() {
       <ul>
         {posts.map((post) => (
           <li key={post.slug}>
-            <Link
-              to={post.slug}
-              className="text-blue-600 underline"
-            >
+            <Link to={post.slug} className="text-blue-600 underline">
               {post.title}
             </Link>
           </li>
