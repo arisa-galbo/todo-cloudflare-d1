@@ -41,7 +41,6 @@ export async function updatePost(
 
 export async function deletePost(slug: string, db: D1Database) {
   const prisma = await connection(db);
-  console.log(slug + "データを取得できています");
   try {
     const result = await prisma.post.delete({
       where: { slug: slug },

@@ -1,6 +1,7 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useLoaderData, redirect } from "@remix-run/react";
+import type { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { getPost, updatePost, deletePost } from "./action";
 
 export const loader = async ({ params, context }: LoaderFunctionArgs) => {
@@ -21,22 +22,30 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
   return json({ post });
 };
 
-export const action = async ({ request, params, context }) => {
+export const action = async ({
+  request,
+  params,
+  context,
+}: ActionFunctionArgs) => {
   const formData = await request.formData();
   const intent = formData.get("intent");
+  console.log(formData);
 
   if (intent === "delete") {
-    await deletePost(params.slug, context.db);
+    await deletePost(params.slug, context.cloudflare.env["test11-binding"]);
   } else if (intent === "update") {
     const title = formData.get("title");
     const markdown = formData.get("markdown");
-    await updatePost(params.slug, { title, markdown }, context.db);
+    await updatePost(
+      params.slug,
+      { title, markdown },
+      context.cloudflare.env["test11-binding"]
+    );
   }
 
   const title = formData.get("title");
   const markdown = formData.get("markdown");
 
-  await updatePost(params.slug, { title, markdown }, context.db);
   return redirect("/posts/admin");
 };
 
