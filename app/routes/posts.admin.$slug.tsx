@@ -3,7 +3,7 @@ import { json } from "@remix-run/node";
 import { Form, useLoaderData, redirect } from "@remix-run/react";
 import type { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { getPost, updatePost, deletePost } from "./action";
-
+import "../styles/admin.css";
 export const loader = async ({ params, context }: LoaderFunctionArgs) => {
   const { slug } = params;
 
@@ -52,7 +52,7 @@ export const action = async ({
 export default function PostAdminSlug() {
   const { post } = useLoaderData();
   return (
-    <Form method="post">
+    <Form method="post" className="form-container">
       <p>
         <label>Title:</label>
         <input type="text" name="title" defaultValue={post.title} />
@@ -62,12 +62,12 @@ export default function PostAdminSlug() {
         <br></br>
         <textarea name="markdown" defaultValue={post.markdown} rows={20} />
       </p>
-      <p className="text-right">
+      <p className="button-group">
         <button
           type="submit"
           name="intent"
           value="update"
-          className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
+          className="update-button"
         >
           update
         </button>
@@ -76,7 +76,7 @@ export default function PostAdminSlug() {
           type="submit"
           name="intent"
           value="delete"
-          className="rounded bg-red-500 py-2 px-4 text-white hover:bg-red-600 focus:bg-red-400 disabled:bg-red-300"
+          className="delete-button"
         >
           delete
         </button>

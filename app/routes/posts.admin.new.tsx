@@ -2,7 +2,7 @@ import { Form, useActionData } from "@remix-run/react";
 import type { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { json, redirect } from "@remix-run/react";
 import invariant from "tiny-invariant";
-
+import "../styles/admin.css";
 import { createPost } from "./action";
 
 export const action = async ({ request, context }: ActionFunctionArgs) => {
@@ -47,7 +47,7 @@ const inputClassName =
 export default function NewPost() {
   const errors = useActionData<typeof action>();
   return (
-    <Form method="post">
+    <Form method="post" className="form-container">
       <p>
         <label>
           Post Title:{" "}
@@ -60,9 +60,7 @@ export default function NewPost() {
       <p>
         <label>
           Post Slug:{" "}
-          {errors?.slug ? (
-            <em className="text-red-600">{errors.slug}</em>
-          ) : null}
+          {errors?.slug ? <em className="error">{errors.slug}</em> : null}
           <input type="text" name="slug" className={inputClassName} />
         </label>
       </p>
@@ -70,7 +68,7 @@ export default function NewPost() {
         <label htmlFor="markdown">
           Markdown:{" "}
           {errors?.markdown ? (
-            <em className="text-red-600">{errors.markdown}</em>
+            <em className="error">{errors.markdown}</em>
           ) : null}
         </label>
         <br />
@@ -81,11 +79,8 @@ export default function NewPost() {
           className={`${inputClassName} font-mono`}
         />
       </p>
-      <p className="text-right">
-        <button
-          type="submit"
-          className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
-        >
+      <p className="button-group">
+        <button type="submit" className="update-button">
           Create Post
         </button>
       </p>

@@ -7,10 +7,6 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
       context.db.post.findMany(),
       context.db.users.findMany(),
     ]);
-
-    //console.log("Posts:", posts);
-    //console.log("Users:", users);
-
     return json({ posts, users });
   } catch (error) {
     console.error("Failed to load posts and users:", error);

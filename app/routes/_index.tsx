@@ -2,10 +2,10 @@ import type { MetaFunction } from "@remix-run/cloudflare";
 import { loader } from "./loader";
 export { loader };
 import { useLoaderData, Link } from "@remix-run/react";
-
+import "../styles/index.css";
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
+    { title: "blog pages" },
     {
       name: "description",
       content: "Welcome to Remix on Cloudflare!",
@@ -28,8 +28,14 @@ interface User {
 export default function Index() {
   const { posts, users } = useLoaderData<{ posts: Post[]; users: User[] }>();
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix on Cloudflare</h1>
+    <div className="top-page">
+      <h1 className="title">Welcome to Remix on Cloudflare</h1>
+      <h2 className="subtitle">this is blog pages</h2>
+      <div className="link-space">
+        <Link to="/posts" className="blog-link">
+          Blog Posts
+        </Link>
+      </div>
       <ul>
         <li>
           <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
@@ -46,18 +52,11 @@ export default function Index() {
           </a>
         </li>
       </ul>
-      <div className="mx-auto mt-16 max-w-7xl text-center">
-        <Link to="/posts" className="text-xl text-blue-600 underline">
-          Blog Posts
-        </Link>
-      </div>
-
-      <div>
-        <h2>Users</h2>
-        <ul>
+      <div className="users-list">
+        <h2 className="subtitle">Users</h2>
+        <ul className="users">
           {users.map((user) => (
             <li key={user.id}>
-              <div>ID: {user.id}</div>
               <div>NAME: {user.name}</div>
               <div>EMAIL: {user.email}</div>
             </li>
