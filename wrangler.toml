@@ -33,7 +33,7 @@ pages_build_output_dir = "./build/client"
 [[d1_databases]]
 binding = "test11-binding"
 database_name = "test11-todo"
-database_id = "b29f8a27-6332-43b9-8017-7f022487ca31"
+database_id = "dc8d1963-a7bb-42be-b11e-6fa95963776c"
 
 # Bind a Durable Object. Durable objects are a scale-to-zero compute primitive based on the actor model.
 # Durable Objects can live for as long as needed. Use these when you need a long-running "server", such as in realtime apps.
