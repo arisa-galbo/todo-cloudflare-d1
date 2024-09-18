@@ -7,7 +7,7 @@ export { loader };
 export default function PostAdmin() {
   const { posts } = useLoaderData<typeof loader>();
   return (
-    <div className="admin-page">
+    <div className="container">
       <h1 className="title">Blog Admin</h1>
       <div className="blog-space">
         <nav className="posts">

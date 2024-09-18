@@ -1,6 +1,7 @@
 .container {
   line-height: 1.8;
   text-align: center;
+  margin: 0 auto;
 }
 
 .title {
@@ -37,7 +38,7 @@
   right: 10px;
   padding: 5px 10px;
   border-radius: 10px;
-  ;
+  z-index: 100;
 }
 
 .post-article {
@@ -60,4 +61,14 @@
 
 .date {
   text-align: right;
+}
+
+.month-group {
+  background-color: aliceblue;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.month-title {
+  border-bottom: 1px solid #bdc0c4;
 }

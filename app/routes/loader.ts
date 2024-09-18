@@ -7,7 +7,12 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
       context.db.post.findMany(),
       context.db.users.findMany(),
     ]);
-    return json({ posts, users });
+    const sortedPosts = posts.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+    return json({ posts: sortedPosts, users });
   } catch (error) {
     console.error("Failed to load posts and users:", error);
     throw new Response("Internal Server Error", { status: 500 });
