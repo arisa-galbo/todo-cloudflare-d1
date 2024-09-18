@@ -2,13 +2,7 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getPost } from "./action";
-import "../styles/posts.css"
-interface Post {
-  slug: string;
-  title: string;
-  markdown: string;
-  createdAt: string;
-}
+import "../styles/posts.css";
 
 export const loader = async ({ params, context }: LoaderFunctionArgs) => {
   const { slug } = params;
@@ -30,10 +24,11 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
 
 export default function PostSlug() {
   const { post } = useLoaderData<typeof loader>();
-  const formattedDate = new Date(post.createdAt).toLocaleDateString('ja-JP', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
+  const createdAtDate = new Date(post.createdAt);
+  const formattedDate = createdAtDate.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
   });
   return (
     <main className="post-box">
