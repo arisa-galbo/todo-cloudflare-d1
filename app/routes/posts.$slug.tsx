@@ -2,6 +2,7 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getPost } from "./action";
+import "../styles/posts.css"
 interface Post {
   slug: string;
   title: string;
@@ -35,12 +36,12 @@ export default function PostSlug() {
     day: '2-digit'
   });
   return (
-    <main className="mx-auto max-w-4xl">
-      <h1 className="my-6 border-b-2 text-center text-3xl">{post.title}</h1>
-      <article className="prose">
+    <main className="post-box">
+      <h1 className="title">{post.title}</h1>
+      <article className="post-article">
         <p>{post.markdown}</p>
-        <p>Created at:{formattedDate}</p>
       </article>
+      <p className="date">Created at:{formattedDate}</p>
     </main>
   );
 }
