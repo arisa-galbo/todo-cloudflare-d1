@@ -24,19 +24,27 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
 
 export default function PostSlug() {
   const { post } = useLoaderData<typeof loader>();
+  function formatDate(date: Date): string {
+    return date.toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  }
   const createdAtDate = new Date(post.createdAt);
-  const formattedDate = createdAtDate.toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
+  const formattedCreatedAt = formatDate(createdAtDate);
+
+  const updatedAtDate = new Date(post.updatedAt);
+  const formattedUpdatedAt = formatDate(updatedAtDate);
+
   return (
     <main className="post-box">
       <h1 className="title">{post.title}</h1>
       <article className="post-article">
         <p>{post.markdown}</p>
       </article>
-      <p className="date">Created at:{formattedDate}</p>
+      <p className="date">Created at:{formattedCreatedAt}</p>
+      <p className="date">Updated at:{formattedUpdatedAt}</p>
     </main>
   );
 }

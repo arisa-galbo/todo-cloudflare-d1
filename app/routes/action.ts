@@ -26,10 +26,12 @@ export async function updatePost(
   db: D1Database
 ) {
   const prisma = await connection(db);
+  const currentTime = new Date();
   try {
+    const dataToUpdate = Object.assign({}, updates, { updatedAt: currentTime });
     const result = await prisma.post.update({
       where: { slug: slug },
-      data: updates,
+      data: dataToUpdate,
     });
     console.log("Post updated:", result);
     return result;

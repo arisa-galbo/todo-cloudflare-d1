@@ -51,11 +51,19 @@ export const action = async ({
 
 export default function PostAdminSlug() {
   const { post } = useLoaderData();
-  const formattedDate = new Date(post.createdAt).toLocaleDateString('ja-JP', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  });
+  function formatDate(date: Date): string {
+    return date.toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  }
+  const createdAtDate = new Date(post.createdAt);
+  const formattedCreatedAt = formatDate(createdAtDate);
+
+  const updatedAtDate = new Date(post.updatedAt);
+  const formattedUpdatedAt = formatDate(updatedAtDate);
+
   return (
     <Form method="post" className="form-container">
       <p>
@@ -67,7 +75,8 @@ export default function PostAdminSlug() {
         <br></br>
         <textarea name="markdown" defaultValue={post.markdown} rows={20} />
       </p>
-      <p>Created at:{formattedDate}</p>
+      <p>Created at:{formattedCreatedAt}</p>
+      <p>updated at:{formattedUpdatedAt}</p>
       <p className="button-group">
         <button
           type="submit"
