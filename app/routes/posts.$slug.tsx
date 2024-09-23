@@ -35,7 +35,7 @@ export default function PostSlug() {
   const formattedCreatedAt = formatDate(createdAtDate);
 
   const updatedAtDate = new Date(post.updatedAt);
-  const formattedUpdatedAt = formatDate(updatedAtDate);
+  const formattedUpdatedAt = post.updatedAt ? formatDate(updatedAtDate) : null;
 
   return (
     <main className="post-box">
@@ -44,7 +44,9 @@ export default function PostSlug() {
         <p>{post.markdown}</p>
       </article>
       <p className="date">Created at:{formattedCreatedAt}</p>
-      <p className="date">Updated at:{formattedUpdatedAt}</p>
+      {formattedUpdatedAt && (
+        <p className="date">Updated at:{formattedUpdatedAt}</p>
+      )}
     </main>
   );
 }

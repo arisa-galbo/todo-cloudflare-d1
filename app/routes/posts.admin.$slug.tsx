@@ -62,7 +62,7 @@ export default function PostAdminSlug() {
   const formattedCreatedAt = formatDate(createdAtDate);
 
   const updatedAtDate = new Date(post.updatedAt);
-  const formattedUpdatedAt = formatDate(updatedAtDate);
+  const formattedUpdatedAt = post.updatedAt ? formatDate(updatedAtDate) : null;
 
   return (
     <Form method="post" className="form-container">
@@ -76,7 +76,8 @@ export default function PostAdminSlug() {
         <textarea name="markdown" defaultValue={post.markdown} rows={20} />
       </p>
       <p>Created at:{formattedCreatedAt}</p>
-      <p>updated at:{formattedUpdatedAt}</p>
+      {formattedUpdatedAt && <p>updated at:{formattedUpdatedAt}</p>}
+
       <p className="button-group">
         <button
           type="submit"
