@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, Link } from "@remix-run/react";
 import { getPost } from "./action";
 import "../styles/posts.css";
 
@@ -47,6 +47,9 @@ export default function PostSlug() {
       {formattedUpdatedAt && (
         <p className="date">Updated at:{formattedUpdatedAt}</p>
       )}
+      <p className="toPosts">
+        <Link to="../posts">back to post list</Link>
+      </p>
     </main>
   );
 }

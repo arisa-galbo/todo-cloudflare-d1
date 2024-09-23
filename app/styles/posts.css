@@ -72,3 +72,8 @@
 .month-title {
   border-bottom: 1px solid #bdc0c4;
 }
+
+.toPosts {
+  color:rgb(72, 107, 250);
+  text-decoration: underline;
+}
