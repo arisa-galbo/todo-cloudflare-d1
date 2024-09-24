@@ -19,11 +19,15 @@ export async function login(
   const user = users.find((user) => user.email === email);
 
   if (!user) {
-    throw new Error("ユーザーが見つかりません。");
+    const errorMessage = "ユーザーが見つかりません。";
+    console.error(errorMessage);
+    throw new Error(errorMessage);
   }
 
   if (user.password !== password) {
-    throw new Error("パスワードが無効です。");
+    const errorMessage = "パスワードが無効です。";
+    console.error(errorMessage);
+    throw new Error(errorMessage);
   }
 
   return user.id;

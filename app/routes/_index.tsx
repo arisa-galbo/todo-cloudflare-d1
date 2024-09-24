@@ -81,8 +81,25 @@ export default function Index() {
 }
 
 export async function action({ request, context }: ActionFunctionArgs) {
-  return await authenticator.authenticate("user-login", request, {
-    successRedirect: "./success",
-    context,
-  });
+  try {
+    return await authenticator.authenticate("user-login", request, {
+      successRedirect: "./success",
+      context,
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error("Internal Server Error");
+  }
+}
+
+export function ErrorBoundary({ error }: { error?: Error }) {
+  return (
+    <div>
+      <h1>エラーが発生しました！</h1>
+      {error ? <p>{error.message}</p> : <p>未知のエラーが発生しました。</p>}
+      <p>申し訳ありませんが、ページの表示中にエラーが発生しました。</p>
+    </div>
+  );
 }
