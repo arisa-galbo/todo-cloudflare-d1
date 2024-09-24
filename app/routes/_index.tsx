@@ -80,8 +80,9 @@ export default function Index() {
   );
 }
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({ request, context }: ActionFunctionArgs) {
   return await authenticator.authenticate("user-login", request, {
     successRedirect: "./success",
+    context,
   });
 }
