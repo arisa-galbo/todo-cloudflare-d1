@@ -82,7 +82,7 @@ export default function Index() {
 
 export async function action({ request, context }: ActionFunctionArgs) {
   return await authenticator.authenticate("user-login", request, {
-    successRedirect: "./success",
+    successRedirect: "./posts",
     context,
   });
 }

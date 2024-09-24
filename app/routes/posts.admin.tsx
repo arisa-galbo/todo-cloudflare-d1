@@ -1,4 +1,3 @@
-import { json } from "@remix-run/node";
 import { Link, useLoaderData, Outlet } from "@remix-run/react";
 import { loader } from "./loader";
 import "../styles/admin.css";
