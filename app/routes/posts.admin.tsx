@@ -9,6 +9,11 @@ export default function PostAdmin() {
   return (
     <div className="container">
       <h1 className="title">Blog Admin</h1>
+      <form action="/logout" method="post">
+        <button type="submit" className="logout-button">
+          Logout
+        </button>
+      </form>
       <div className="blog-space">
         <nav className="posts">
           <ul>
