@@ -1,7 +1,8 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
+import type { MetaFunction, ActionFunctionArgs } from "@remix-run/node";
 import { loader } from "./loader";
 export { loader };
-import { useLoaderData, Link } from "@remix-run/react";
+import { useLoaderData, Link, Form } from "@remix-run/react";
+import { authenticator } from "~/services/auth.server";
 import "../styles/index.css";
 export const meta: MetaFunction = () => {
   return [
@@ -52,6 +53,18 @@ export default function Index() {
           </a>
         </li>
       </ul>
+      <div className="login-form">
+        <Form method="post">
+          <input type="email" name="email" required />
+          <input
+            type="password"
+            name="password"
+            autoComplete="current-password"
+            required
+          />
+          <button>Sign In</button>
+        </Form>
+      </div>
       <div className="users-list">
         <h2 className="subtitle">Users</h2>
         <ul className="users">
@@ -65,4 +78,10 @@ export default function Index() {
       </div>
     </div>
   );
+}
+
+export async function action({ request }: ActionFunctionArgs) {
+  return await authenticator.authenticate("user-login", request, {
+    successRedirect: "./success",
+  });
 }

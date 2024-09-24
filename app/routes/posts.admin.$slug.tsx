@@ -1,7 +1,6 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useLoaderData, redirect } from "@remix-run/react";
-import type { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { getPost, updatePost, deletePost } from "./action";
 import "../styles/admin.css";
 export const loader = async ({ params, context }: LoaderFunctionArgs) => {
