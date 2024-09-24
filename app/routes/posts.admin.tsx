@@ -20,6 +20,9 @@ export default function PostAdmin() {
               </li>
             ))}
           </ul>
+          <div className="toPosts">
+            <Link to="../posts">back to post list</Link>
+          </div>
         </nav>
         <main className="post-container">
           <Outlet />
