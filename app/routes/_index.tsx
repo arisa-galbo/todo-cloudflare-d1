@@ -81,17 +81,10 @@ export default function Index() {
 }
 
 export async function action({ request, context }: ActionFunctionArgs) {
-  try {
-    return await authenticator.authenticate("user-login", request, {
-      successRedirect: "./success",
-      context,
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-    throw new Error("Internal Server Error");
-  }
+  return await authenticator.authenticate("user-login", request, {
+    successRedirect: "./success",
+    context,
+  });
 }
 
 export function ErrorBoundary({ error }: { error?: Error }) {
