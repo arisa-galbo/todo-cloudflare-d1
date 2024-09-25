@@ -2,11 +2,13 @@ import { loader } from "./loader";
 export { loader };
 import { useLoaderData, Link } from "@remix-run/react";
 import "../styles/posts.css";
+
 interface Post {
   slug: string;
   title: string;
   markdown: string;
   createdAt: string;
+  userId: number;
 }
 
 interface User {
@@ -34,6 +36,7 @@ const groupPostByMonth = (posts: Post[]) => {
 export default function Posts() {
   const { posts, users } = useLoaderData<{ posts: Post[]; users: User[] }>();
   const groupedPosts = groupPostByMonth(posts);
+
   return (
     <div className="container">
       <h1 className="title">Posts</h1>
@@ -41,13 +44,19 @@ export default function Posts() {
         <div key={monthYear} className="month-group">
           <h2 className="month-title">{monthYear}</h2>
           <ul className="posts-list">
-            {postsInMonth.map((post) => (
-              <li key={post.slug}>
-                <Link to={post.slug} className="text-blue-600 underline">
-                  {post.title}
-                </Link>
-              </li>
-            ))}
+            {postsInMonth.map((post) => {
+              const writer = users.find((user) => user.id === post.userId);
+              return (
+                <li key={post.slug}>
+                  <div className="titleAndWriter">
+                    <Link to={post.slug} className="post-title">
+                      {post.title}
+                    </Link>
+                    <p>{writer.name}</p>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
       ))}

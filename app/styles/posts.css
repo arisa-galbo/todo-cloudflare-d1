@@ -77,3 +77,18 @@
   color:rgb(72, 107, 250);
   text-decoration: underline;
 }
+
+.titleAndWriter {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 0.5rem; 
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+
+.post-title {
+  font-size: 20px;
+}
