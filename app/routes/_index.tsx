@@ -1,7 +1,7 @@
 import type { MetaFunction, ActionFunctionArgs } from "@remix-run/node";
 import { loader } from "./loader";
 export { loader };
-import { useLoaderData, Link, Form } from "@remix-run/react";
+import { useLoaderData, Link, Form, redirect } from "@remix-run/react";
 import { authenticator } from "~/services/auth.server";
 import "../styles/index.css";
 export const meta: MetaFunction = () => {

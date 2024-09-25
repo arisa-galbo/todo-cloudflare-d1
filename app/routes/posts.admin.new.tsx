@@ -4,17 +4,20 @@ import { json, redirect } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import "../styles/admin.css";
 import { createPost } from "./action";
+import { getSession } from "../services/session.server";
 
 export const action = async ({ request, context }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const title = formData.get("title") as string;
   const slug = formData.get("slug") as string;
   const markdown = formData.get("markdown") as string;
-
+  const session = await getSession(request.headers.get("cookie"));
+  const userId = session.get("user");
   const errors = {
     title: title ? null : "Title is required",
     slug: slug ? null : "Slug is required",
     markdown: markdown ? null : "Markdown is required",
+    userId: userId ? null : "You have to login",
   };
 
   const hasErrors = Object.values(errors).some((errorMessage) => errorMessage);
@@ -28,7 +31,7 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
 
   try {
     await createPost(
-      { title, slug, markdown },
+      { title, slug, markdown, userId },
       context.cloudflare.env["test11-binding"]
     );
   } catch (error) {
@@ -80,6 +83,7 @@ export default function NewPost() {
         />
       </p>
       <p className="button-group">
+        {errors?.userId ? <em className="error">{errors.userId}</em> : null}
         <button type="submit" className="update-button">
           Create Post
         </button>

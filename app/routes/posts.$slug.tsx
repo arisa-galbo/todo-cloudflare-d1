@@ -19,11 +19,14 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
     throw new Response("Post not found", { status: 404 });
   }
 
-  return json({ post });
+  const user = await context.db.users.findUnique({
+    where: { id: post.userId },
+  });
+  return json({ post, user });
 };
 
 export default function PostSlug() {
-  const { post } = useLoaderData<typeof loader>();
+  const { post, user } = useLoaderData<typeof loader>();
   function formatDate(date: Date): string {
     return date.toLocaleDateString("ja-JP", {
       year: "numeric",
@@ -40,6 +43,7 @@ export default function PostSlug() {
   return (
     <main className="post-box">
       <h1 className="title">{post.title}</h1>
+      <p className="writer">Writer:{user.name}</p>
       <article className="post-article">
         <p>{post.markdown}</p>
       </article>

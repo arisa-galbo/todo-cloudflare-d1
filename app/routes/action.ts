@@ -2,7 +2,7 @@ import { connection } from "~/database/client";
 import type { Post } from "@prisma/client";
 
 export async function createPost(
-  post: { title: string; slug: string; markdown: string },
+  post: { title: string; slug: string; markdown: string; userId: string },
   db: D1Database
 ) {
   const prisma = await connection(db);

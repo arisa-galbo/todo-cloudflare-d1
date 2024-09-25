@@ -1,4 +1,4 @@
-import { json, LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs } from "@remix-run/node";
 
 const loadUsers = async (context: LoaderFunctionArgs["context"]) => {
   try {
@@ -25,6 +25,6 @@ export async function login(
   if (user.password !== password) {
     throw new Error("パスワードが無効です。");
   }
-
-  return user.id;
+  const userId = user.id;
+  return userId;
 }
