@@ -1,7 +1,35 @@
 import { Link, useLoaderData, Outlet } from "@remix-run/react";
-import { loader } from "./loader";
 import "../styles/admin.css";
-export { loader };
+import type { LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { json } from "@remix-run/node";
+import { getSession } from "~/services/session.server";
+
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+  try {
+    const session = await getSession(request.headers.get("cookie"));
+    const userId = session.get("user");
+    if (!userId) {
+      throw new Response("Unauthorized", { status: 401 });
+    }
+
+    const [posts, users] = await Promise.all([
+      context.db.post.findMany(),
+      context.db.users.findMany(),
+    ]);
+
+    const userPosts = posts.filter((post) => post.userId === userId);
+
+    const sortedPosts = userPosts.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+    return json({ posts: sortedPosts, users });
+  } catch (error) {
+    console.error("Failed to load posts and users:", error);
+    throw new Response("Internal Server Error", { status: 500 });
+  }
+};
 
 export default function PostAdmin() {
   const { posts } = useLoaderData<typeof loader>();
